@@ -1,6 +1,5 @@
 from .base_page import BasePage
-from .locators import MainPageLocators
-from .login_page import LoginPage
+from .locators import ProductPageLocators
 from selenium.webdriver.common.by import By
 
 class ProductPage(BasePage):
@@ -16,3 +15,11 @@ class ProductPage(BasePage):
         price = self.browser.find_element(By.CSS_SELECTOR, "p.price_color").text
         added_price = self.browser.find_element(By.CSS_SELECTOR, ".alert-info strong").text
         assert price == added_price, "The price is different"
+
+    def should_not_be_success_message(self):
+        assert self.is_not_element_present(*ProductPageLocators.SUCCESS_MESSAGE), \
+        "Success message is presented, but should not be"
+
+    def should_message_disappeared(self):
+        assert self.is_disappeared(*ProductPageLocators.SUCCESS_MESSAGE), \
+        "Success message is presented, but should be disappeared"
